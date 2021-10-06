@@ -3,9 +3,11 @@
 @import url('line-awesome/dist/line-awesome/css/line-awesome.min.css');
 
 [theme~="dark"] {
-    /* blue #233348 #2a7fef */
-    /* green #2c6d3b #194e19 */
-    /* orange #926513 #c2881f */
-    --lumo-base-color: #926513;
-    --lumo-primary-color: #c2881f;
+    /*
+      blue #233348 #2a7fef
+      green #2c6d3b #194e19
+      orange #926513 #c2881f
+    */
+    --lumo-base-color: #233348;
+    --lumo-primary-color: #2a7fef;
 }

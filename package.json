@@ -59,7 +59,6 @@
     "@vaadin/vaadin-radio-button": "21.0.0",
     "@vaadin/vaadin-rich-text-editor": "21.0.0",
     "@vaadin/vaadin-select": "21.0.0",
-    "@vaadin/vaadin-shrinkwrap": "21.0.0",
     "@vaadin/vaadin-split-layout": "21.0.0",
     "@vaadin/vaadin-tabs": "21.0.0",
     "@vaadin/vaadin-template-renderer": "21.0.0",
@@ -160,7 +159,6 @@
       "@vaadin/vaadin-radio-button": "21.0.0",
       "@vaadin/vaadin-rich-text-editor": "21.0.0",
       "@vaadin/vaadin-select": "21.0.0",
-      "@vaadin/vaadin-shrinkwrap": "21.0.0",
       "@vaadin/vaadin-split-layout": "21.0.0",
       "@vaadin/vaadin-tabs": "21.0.0",
       "@vaadin/vaadin-template-renderer": "21.0.0",
@@ -200,6 +198,6 @@
       "workbox-precaching": "6.2.0",
       "workbox-webpack-plugin": "6.2.0"
     },
-    "hash": "5bc90a0cd105168c9f8dad50b9a96cb0ef1d3279316716d3b23f069a8d364e8b"
+    "hash": "8606bf85a592f4cc9a63e1e90251c81947e9a32d8c87e12f4418c2a66c54e71b"
   }
 }
