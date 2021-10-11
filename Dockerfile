@@ -1,23 +1,9 @@
-# Stage that builds the application, a prerequisite for the running stage
-FROM openjdk:17-jdk-slim
+## Create the war file by running mvn package
+FROM jetty
+COPY target/*.war /var/lib/jetty/webapps/ROOT.war
 
-# Set password for root
-RUN echo 'root:D0ck3r!"' | chpasswd
+RUN java -jar $JETTY_HOME/start.jar --add-to-startd=jmx,stats
+ENTRYPOINT [ "java", "-jar", "/usr/local/jetty/start.jar" ]
 
-# Install some network utilities for tracing problems
-RUN apt-get update -qq && apt-get install -qq --no-install-recommends inetutils-ping telnet curl netcat nodejs
-
-# Add a non-root user for running the app
-RUN useradd -m myuser
-WORKDIR /usr/app
-RUN chown myuser:myuser /usr/app
-
-# Copy the compiled app to the image
-USER myuser
-COPY --chown=myuser:myuser target/*.jar ./app.jar
-
-# Expose the app port
-EXPOSE 8080
-
-# Execute the app
-ENTRYPOINT ["java", "-jar", "./app.jar"]
+## docker run -e APP_VERSION=2.4 -it --rm -p 8080:8080 --name k8s-demo-app vaadin/k8s-demo-app:0.0 --adfa-asdfs=asfdaf
+## docker run -it --rm --entrypoint /bin/bash --name my-app vaadin/k8s-demo-app:0.0
