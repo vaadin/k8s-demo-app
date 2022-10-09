@@ -2,43 +2,37 @@ package com.vaadin.k8s.security;
 
 import java.util.Optional;
 
-import javax.servlet.http.Cookie;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
+import org.springframework.stereotype.Component;
 
 import com.vaadin.flow.component.UI;
-import com.vaadin.flow.server.VaadinResponse;
 import com.vaadin.flow.server.VaadinServletRequest;
 import com.vaadin.k8s.data.entity.User;
 import com.vaadin.k8s.data.service.UserRepository;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContext;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
-import org.springframework.stereotype.Component;
-
 @Component
 public class AuthenticatedUser {
 
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
-    private UserDetails getAuthenticatedUser() {
+    @Autowired
+    public AuthenticatedUser(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
+
+    private Optional<Authentication> getAuthentication() {
         SecurityContext context = SecurityContextHolder.getContext();
-        Object principal = context.getAuthentication().getPrincipal();
-        if (principal instanceof UserDetails) {
-            UserDetails userDetails = (UserDetails) context.getAuthentication().getPrincipal();
-            return userDetails;
-        }
-        return null;
+        return Optional.ofNullable(context.getAuthentication())
+                .filter(authentication -> !(authentication instanceof AnonymousAuthenticationToken));
     }
 
     public Optional<User> get() {
-        UserDetails details = getAuthenticatedUser();
-        if (details == null) {
-            return Optional.empty();
-        }
-        return Optional.of(userRepository.findByUsername(details.getUsername()));
+        return getAuthentication().map(authentication -> userRepository.findByUsername(authentication.getName()));
     }
 
     public void logout() {
