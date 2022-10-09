@@ -4,7 +4,7 @@ import java.util.Base64;
 
 import javax.crypto.spec.SecretKeySpec;
 
-import com.vaadin.flow.spring.security.VaadinWebSecurityConfigurerAdapter;
+import com.vaadin.flow.spring.security.VaadinWebSecurity;
 import com.vaadin.k8s.views.login.LoginView;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -19,7 +19,7 @@ import org.springframework.security.oauth2.jose.jws.JwsAlgorithms;
 
 @EnableWebSecurity
 @Configuration
-public class SecurityConfiguration extends VaadinWebSecurityConfigurerAdapter {
+public class SecurityConfiguration extends VaadinWebSecurity {
 
     public static final String LOGOUT_URL = "/";
 
