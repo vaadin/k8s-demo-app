@@ -4,9 +4,8 @@ A Vaadin demo app to test Vaadin [cluster setup](https://github.com/vaadin/k8s-b
 
 ### Branches
 
-There are 3 branches in this repo:
-- [main](https://github.com/vaadin/k8s-demo-app/) It's a project downloaded from start.vaadin.com and modified to include the vaadin-cluster-support dependency to make the app aware of cluster update events.
-- [stateless-auth](https://github.com/vaadin/k8s-demo-app/tree/stateless-auth) which is the same application, but implementing stateless auth, which means that the user is always logged in when swithching blue/green
+There are 2 branches in this repo:
+- [main](https://github.com/vaadin/k8s-demo-app/) It's a project downloaded from start.vaadin.com and modified to include the vaadin-cluster-support dependency to make the app aware of cluster update events, and to support stateless authentication by using Vaadin security helpers
 - [plain-java](https://github.com/vaadin/k8s-demo-app/tree/plain-java) A simple vaadin application with the vaadin-cluster-support but not depending on spring stack, and without authentication.
 
 ## Running the application
