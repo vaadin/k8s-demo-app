@@ -31,7 +31,11 @@ import com.vaadin.flow.data.binder.ValidationException;
 import com.vaadin.flow.data.renderer.LitRenderer;
 import com.vaadin.flow.router.BeforeEnterEvent;
 import com.vaadin.flow.router.BeforeEnterObserver;
+import com.vaadin.flow.router.BeforeLeaveEvent;
+import com.vaadin.flow.router.BeforeLeaveEvent.ContinueNavigationAction;
+import com.vaadin.flow.router.BeforeLeaveObserver;
 import com.vaadin.flow.router.PageTitle;
+import com.vaadin.flow.router.PreserveOnRefresh;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.spring.data.VaadinSpringDataHelpers;
 import com.vaadin.k8s.data.entity.SamplePerson;
@@ -42,7 +46,8 @@ import com.vaadin.k8s.views.MainLayout;
 @Route(value = "personas/:samplePersonID?/:action?(edit)", layout = MainLayout.class)
 @RolesAllowed("admin")
 @Uses(Icon.class)
-public class PersonasView extends Div implements BeforeEnterObserver {
+@PreserveOnRefresh
+public class PersonasView extends Div implements BeforeEnterObserver, BeforeLeaveObserver {
 
     private final String SAMPLEPERSON_ID = "samplePersonID";
     private final String SAMPLEPERSON_EDIT_ROUTE_TEMPLATE = "personas/%d/edit";
@@ -70,6 +75,7 @@ public class PersonasView extends Div implements BeforeEnterObserver {
     private Div editorLayoutDiv;
 
     private ConfirmDialog dialog;
+    private ContinueNavigationAction posponed;
 
     public PersonasView(@Autowired SamplePersonService samplePersonService) {
         this.samplePersonService = samplePersonService;
@@ -146,8 +152,15 @@ public class PersonasView extends Div implements BeforeEnterObserver {
         });
 
         // Configure dialog to discard unsaved changes
-        dialog = new ConfirmDialog(null, "Do you want to discard your changes?", "No", e -> {}, "Yes",
-                e -> clearForm());
+        dialog = new ConfirmDialog(null, "Do you want to discard your changes?", "No", e -> {
+            posponed = null;
+        }, "Yes", e -> {
+            clearForm();
+            if (posponed != null) {
+                posponed.proceed();
+                posponed = null;
+            }
+        });
     }
 
     @Override
@@ -166,6 +179,14 @@ public class PersonasView extends Div implements BeforeEnterObserver {
                 refreshGrid();
                 event.forwardTo(PersonasView.class);
             }
+        }
+    }
+
+    @Override
+    public void beforeLeave(BeforeLeaveEvent event) {
+        if (binder.hasChanges()) {
+            dialog.open();
+            posponed = event.postpone();
         }
     }
 
