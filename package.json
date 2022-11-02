@@ -30,7 +30,6 @@
     "@vaadin/field-base": "23.2.4",
     "@vaadin/field-highlighter": "23.2.4",
     "@vaadin/flow-frontend": "./target/flow-frontend",
-    "@vaadin/form": "./target/flow-frontend/form",
     "@vaadin/form-layout": "23.2.4",
     "@vaadin/grid": "23.2.4",
     "@vaadin/horizontal-layout": "23.2.4",
@@ -246,7 +245,7 @@
       "workbox-core": "6.5.0",
       "workbox-precaching": "6.5.0"
     },
-    "hash": "2dc8c817d97b4b1d479de485b2068d63a2b2b632a8583f448f3a22007a560136"
+    "hash": "43a5372148b182bd588ce3b942b55fc61fb3bfb3fdd1cb386def01b528b5b97d"
   },
   "overrides": {
     "@vaadin/bundles": "$@vaadin/bundles",
@@ -347,11 +346,11 @@
     "@vaadin/vaadin-virtual-list": "$@vaadin/vaadin-virtual-list",
     "@vaadin/vertical-layout": "$@vaadin/vertical-layout",
     "@vaadin/virtual-list": "$@vaadin/virtual-list",
-    "@polymer/polymer": "$@polymer/polymer",
-    "construct-style-sheets-polyfill": "$construct-style-sheets-polyfill",
-    "line-awesome": "$line-awesome",
-    "lit": "$lit",
     "@vaadin/common-frontend": "$@vaadin/common-frontend",
-    "date-fns": "$date-fns"
+    "construct-style-sheets-polyfill": "$construct-style-sheets-polyfill",
+    "lit": "$lit",
+    "@polymer/polymer": "$@polymer/polymer",
+    "date-fns": "$date-fns",
+    "line-awesome": "$line-awesome"
   }
 }
