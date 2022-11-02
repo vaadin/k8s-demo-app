@@ -9,10 +9,12 @@ import org.springframework.data.domain.PageRequest;
 
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.HasStyle;
+import com.vaadin.flow.component.Key;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.checkbox.Checkbox;
+import com.vaadin.flow.component.confirmdialog.ConfirmDialog;
 import com.vaadin.flow.component.datepicker.DatePicker;
 import com.vaadin.flow.component.dependency.Uses;
 import com.vaadin.flow.component.formlayout.FormLayout;
@@ -21,8 +23,8 @@ import com.vaadin.flow.component.grid.GridVariant;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.notification.Notification;
+import com.vaadin.flow.component.orderedlayout.FlexComponent.JustifyContentMode;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
-import com.vaadin.flow.component.splitlayout.SplitLayout;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.binder.BeanValidationBinder;
 import com.vaadin.flow.data.binder.ValidationException;
@@ -57,6 +59,7 @@ public class PersonasView extends Div implements BeforeEnterObserver {
 
     private Button cancel = new Button("Cancel");
     private Button save = new Button("Save");
+    private Button plus = new Button("+");
 
     private BeanValidationBinder<SamplePerson> binder;
 
@@ -64,18 +67,25 @@ public class PersonasView extends Div implements BeforeEnterObserver {
 
     private SamplePersonService samplePersonService;
 
+    private Div editorLayoutDiv;
+
+    private ConfirmDialog dialog;
+
     public PersonasView(@Autowired SamplePersonService samplePersonService) {
         this.samplePersonService = samplePersonService;
         addClassNames("personas-view", "flex", "flex-col", "h-full");
 
+
         // Create UI
-        SplitLayout splitLayout = new SplitLayout();
-        splitLayout.setSizeFull();
+        HorizontalLayout horizontalLayout = new HorizontalLayout();
+        horizontalLayout.setSpacing(false);
+        horizontalLayout.setSizeFull();
 
-        createGridLayout(splitLayout);
-        createEditorLayout(splitLayout);
+        createGridLayout(horizontalLayout);
+        createEditorLayout(horizontalLayout);
+        showDetail(false);
 
-        add(splitLayout);
+        add(horizontalLayout);
 
         // Configure Grid
         grid.addColumn("firstName").setAutoWidth(true);
@@ -112,14 +122,12 @@ public class PersonasView extends Div implements BeforeEnterObserver {
         binder = new BeanValidationBinder<>(SamplePerson.class);
 
         // Bind fields. This where you'd define e.g. validation rules
-
         binder.bindInstanceFields(this);
 
-        cancel.addClickListener(e -> {
-            clearForm();
-            refreshGrid();
-        });
-
+        // Add actions to the buttons
+        plus.addClickListener(e -> populateForm(null));
+        cancel.addClickListener(e -> cancel());
+        UI.getCurrent().addShortcutListener(cancel::click, Key.ESCAPE);
         save.addClickListener(e -> {
             try {
                 if (this.samplePerson == null) {
@@ -137,6 +145,9 @@ public class PersonasView extends Div implements BeforeEnterObserver {
             }
         });
 
+        // Configure dialog to discard unsaved changes
+        dialog = new ConfirmDialog(null, "Do you want to discard your changes?", "No", e -> {}, "Yes",
+                e -> clearForm());
     }
 
     @Override
@@ -158,10 +169,10 @@ public class PersonasView extends Div implements BeforeEnterObserver {
         }
     }
 
-    private void createEditorLayout(SplitLayout splitLayout) {
-        Div editorLayoutDiv = new Div();
-        editorLayoutDiv.setClassName("flex flex-col");
-        editorLayoutDiv.setWidth("400px");
+    private void createEditorLayout(HorizontalLayout splitLayout) {
+        editorLayoutDiv = new Div();
+        editorLayoutDiv.setClassName("detail flex flex-col bg-contrast-5");
+        editorLayoutDiv.setMaxWidth("350px");
 
         Div editorDiv = new Div();
         editorDiv.setClassName("p-l flex-grow");
@@ -183,27 +194,32 @@ public class PersonasView extends Div implements BeforeEnterObserver {
         }
         formLayout.add(fields);
         editorDiv.add(formLayout);
+
         createButtonLayout(editorLayoutDiv);
 
-        splitLayout.addToSecondary(editorLayoutDiv);
+        splitLayout.add(editorLayoutDiv);
+
     }
 
     private void createButtonLayout(Div editorLayoutDiv) {
         HorizontalLayout buttonLayout = new HorizontalLayout();
         buttonLayout.setClassName("w-full flex-wrap bg-contrast-5 py-s px-l");
-        buttonLayout.setSpacing(true);
-        cancel.addThemeVariants(ButtonVariant.LUMO_TERTIARY);
+        buttonLayout.setJustifyContentMode(JustifyContentMode.BETWEEN);
+        cancel.addThemeVariants(ButtonVariant.LUMO_TERTIARY, ButtonVariant.LUMO_ERROR);
         save.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
         buttonLayout.add(save, cancel);
         editorLayoutDiv.add(buttonLayout);
     }
 
-    private void createGridLayout(SplitLayout splitLayout) {
+    private void createGridLayout(HorizontalLayout splitLayout) {
         Div wrapper = new Div();
         wrapper.setId("grid-wrapper");
         wrapper.setWidthFull();
-        splitLayout.addToPrimary(wrapper);
+        splitLayout.add(wrapper);
+        plus.setClassName("fab-button");
+        plus.addThemeVariants(ButtonVariant.LUMO_PRIMARY, ButtonVariant.LUMO_LARGE);
         wrapper.add(grid);
+        wrapper.add(plus);
     }
 
     private void refreshGrid() {
@@ -211,13 +227,27 @@ public class PersonasView extends Div implements BeforeEnterObserver {
         grid.getLazyDataView().refreshAll();
     }
 
+    private void cancel() {
+        if (binder.hasChanges()) {
+            dialog.open();
+        } else {
+            clearForm();
+        }
+    }
+
     private void clearForm() {
         populateForm(null);
+        showDetail(false);
     }
 
     private void populateForm(SamplePerson value) {
         this.samplePerson = value;
         binder.readBean(this.samplePerson);
+        showDetail(true);
+    }
 
+    private void showDetail(boolean show) {
+        editorLayoutDiv.setVisible(show);
+        plus.setVisible(!show);
     }
 }

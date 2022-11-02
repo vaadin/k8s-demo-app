@@ -1,0 +1,14 @@
+.fab-button {
+  position: absolute;
+  bottom: var(--lumo-size-m);
+  right: var(--lumo-size-xs);
+  border-radius: 50%;
+  min-width: 0px;
+}
+
+@media only screen and (max-width: 600px) {
+  .personas-view .detail {
+    min-width: 100%;
+  }
+}
+
