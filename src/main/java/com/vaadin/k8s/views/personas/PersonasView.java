@@ -38,6 +38,7 @@ import com.vaadin.flow.router.BeforeLeaveObserver;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.PreserveOnRefresh;
 import com.vaadin.flow.router.Route;
+import com.vaadin.flow.router.RouteAlias;
 import com.vaadin.flow.spring.data.VaadinSpringDataHelpers;
 import com.vaadin.k8s.data.entity.SamplePerson;
 import com.vaadin.k8s.data.service.SamplePersonService;
@@ -45,6 +46,7 @@ import com.vaadin.k8s.views.MainLayout;
 
 @PageTitle("Personas")
 @Route(value = "personas/:samplePersonID?/:action?(edit)", layout = MainLayout.class)
+@RouteAlias(value = "personas/:new(new)", layout = MainLayout.class)
 @RolesAllowed("admin")
 @Uses(Icon.class)
 @PreserveOnRefresh
@@ -134,7 +136,7 @@ public class PersonasView extends Div implements BeforeEnterObserver, BeforeLeav
         binder.bindInstanceFields(this);
 
         // Add actions to the buttons
-        plus.addClickListener(e -> populateForm(null));
+        plus.addClickListener(e -> UI.getCurrent().navigate("personas/new"));
         cancel.addClickListener(e -> closeEditor());
         save.addClickListener(e -> {
             try {
@@ -172,22 +174,29 @@ public class PersonasView extends Div implements BeforeEnterObserver, BeforeLeav
 
     @Override
     public void beforeEnter(BeforeEnterEvent event) {
+        if (binder.hasChanges()) {
+            return;
+        }
+        if (event.getRouteParameters().get("new").isPresent()) {
+            populateForm(null);
+            return;
+        }
         Optional<Integer> samplePersonId = event.getRouteParameters().getInteger(SAMPLEPERSON_ID);
-        if (samplePersonId.isPresent() && !binder.hasChanges()) {
-            Optional<SamplePerson> samplePersonFromBackend = samplePersonService.get(samplePersonId.get());
-            if (samplePersonFromBackend.isPresent()) {
-                populateForm(samplePersonFromBackend.get());
-            } else {
-                Notification.show(
-                        String.format("The requested samplePerson was not found, ID = %d", samplePersonId.get()), 3000,
-                        Notification.Position.BOTTOM_START);
-                // when a row is selected but the data is no longer available,
-                // refresh grid
-                refreshGrid();
-                event.forwardTo(PersonasView.class);
-            }
-        } else if (!samplePersonId.isPresent()) {
+        if (!samplePersonId.isPresent()) {
             clearForm();
+            return;
+        }
+        Optional<SamplePerson> samplePersonFromBackend = samplePersonService.get(samplePersonId.get());
+        if (samplePersonFromBackend.isPresent()) {
+            populateForm(samplePersonFromBackend.get());
+        } else {
+            Notification.show(
+                    String.format("The requested samplePerson was not found, ID = %d", samplePersonId.get()), 3000,
+                    Notification.Position.BOTTOM_START);
+            // when a row is selected but the data is no longer available,
+            // refresh grid
+            refreshGrid();
+            event.forwardTo(PersonasView.class);
         }
     }
 
