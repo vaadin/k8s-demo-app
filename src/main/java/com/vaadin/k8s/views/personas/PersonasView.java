@@ -49,6 +49,7 @@ import com.vaadin.k8s.views.MainLayout;
 @PreserveOnRefresh
 public class PersonasView extends Div implements BeforeEnterObserver, BeforeLeaveObserver {
 
+    private static final long serialVersionUID = 1L;
     private final String SAMPLEPERSON_ID = "samplePersonID";
     private final String SAMPLEPERSON_EDIT_ROUTE_TEMPLATE = "personas/%d/edit";
 
@@ -80,7 +81,6 @@ public class PersonasView extends Div implements BeforeEnterObserver, BeforeLeav
     public PersonasView(@Autowired SamplePersonService samplePersonService) {
         this.samplePersonService = samplePersonService;
         addClassNames("personas-view", "flex", "flex-col", "h-full");
-
 
         // Create UI
         HorizontalLayout horizontalLayout = new HorizontalLayout();
@@ -119,8 +119,7 @@ public class PersonasView extends Div implements BeforeEnterObserver, BeforeLeav
             if (event.getValue() != null) {
                 UI.getCurrent().navigate(String.format(SAMPLEPERSON_EDIT_ROUTE_TEMPLATE, event.getValue().getId()));
             } else {
-                clearForm();
-                UI.getCurrent().navigate(PersonasView.class);
+                closeEditor();
             }
         });
 
@@ -132,7 +131,7 @@ public class PersonasView extends Div implements BeforeEnterObserver, BeforeLeav
 
         // Add actions to the buttons
         plus.addClickListener(e -> populateForm(null));
-        cancel.addClickListener(e -> cancel());
+        cancel.addClickListener(e -> closeEditor());
         UI.getCurrent().addShortcutListener(cancel::click, Key.ESCAPE);
         save.addClickListener(e -> {
             try {
@@ -145,7 +144,7 @@ public class PersonasView extends Div implements BeforeEnterObserver, BeforeLeav
                 clearForm();
                 refreshGrid();
                 Notification.show("SamplePerson details stored.");
-                UI.getCurrent().navigate(PersonasView.class);
+                closeEditor();
             } catch (ValidationException validationException) {
                 Notification.show("An exception happened while trying to store the samplePerson details.");
             }
@@ -166,7 +165,7 @@ public class PersonasView extends Div implements BeforeEnterObserver, BeforeLeav
     @Override
     public void beforeEnter(BeforeEnterEvent event) {
         Optional<Integer> samplePersonId = event.getRouteParameters().getInteger(SAMPLEPERSON_ID);
-        if (samplePersonId.isPresent()) {
+        if (samplePersonId.isPresent() && !binder.hasChanges()) {
             Optional<SamplePerson> samplePersonFromBackend = samplePersonService.get(samplePersonId.get());
             if (samplePersonFromBackend.isPresent()) {
                 populateForm(samplePersonFromBackend.get());
@@ -179,6 +178,8 @@ public class PersonasView extends Div implements BeforeEnterObserver, BeforeLeav
                 refreshGrid();
                 event.forwardTo(PersonasView.class);
             }
+        } else if (!samplePersonId.isPresent()) {
+            clearForm();
         }
     }
 
@@ -188,6 +189,10 @@ public class PersonasView extends Div implements BeforeEnterObserver, BeforeLeav
             dialog.open();
             posponed = event.postpone();
         }
+    }
+
+    private void closeEditor() {
+        UI.getCurrent().navigate(PersonasView.class);
     }
 
     private void createEditorLayout(HorizontalLayout splitLayout) {
@@ -246,14 +251,6 @@ public class PersonasView extends Div implements BeforeEnterObserver, BeforeLeav
     private void refreshGrid() {
         grid.select(null);
         grid.getLazyDataView().refreshAll();
-    }
-
-    private void cancel() {
-        if (binder.hasChanges()) {
-            dialog.open();
-        } else {
-            clearForm();
-        }
     }
 
     private void clearForm() {
