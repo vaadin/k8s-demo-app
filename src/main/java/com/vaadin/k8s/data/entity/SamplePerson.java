@@ -1,6 +1,11 @@
 package com.vaadin.k8s.data.entity;
 
 import javax.persistence.Entity;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 import com.vaadin.k8s.data.AbstractEntity;
 import java.time.LocalDate;
@@ -8,11 +13,19 @@ import java.time.LocalDate;
 @Entity
 public class SamplePerson extends AbstractEntity {
 
+    @NotEmpty
+    @Size(min = 2, max = 20)
     private String firstName;
     private String lastName;
+    @NotEmpty
+    @Email
     private String email;
+    @NotEmpty
+    @Pattern(regexp = "[0-9\\-\\. \\+\\(\\)]{9,16}", message = "Enter a valid phone number")
     private String phone;
+    @NotNull
     private LocalDate dateOfBirth;
+    @NotEmpty
     private String occupation;
     private boolean important;
 
