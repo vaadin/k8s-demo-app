@@ -118,6 +118,9 @@ public class PersonasView extends Div implements BeforeEnterObserver, BeforeLeav
         // when a row is selected or deselected, populate form
         grid.asSingleSelect().addValueChangeListener(event -> {
             if (event.getValue() != null) {
+                if (binder.hasChanges()) {
+                    grid.select(null);
+                }
                 UI.getCurrent().navigate(String.format(SAMPLEPERSON_EDIT_ROUTE_TEMPLATE, event.getValue().getId()));
             } else {
                 closeEditor();
@@ -265,6 +268,7 @@ public class PersonasView extends Div implements BeforeEnterObserver, BeforeLeav
 
     private void populateForm(SamplePerson value) {
         this.samplePerson = value;
+        grid.select(this.samplePerson);
         binder.readBean(this.samplePerson);
         showDetail(true);
     }
