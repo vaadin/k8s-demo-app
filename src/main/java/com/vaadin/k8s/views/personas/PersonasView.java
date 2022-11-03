@@ -7,6 +7,7 @@ import javax.annotation.security.RolesAllowed;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 
+import com.vaadin.flow.component.AttachEvent;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.HasStyle;
 import com.vaadin.flow.component.Key;
@@ -132,7 +133,6 @@ public class PersonasView extends Div implements BeforeEnterObserver, BeforeLeav
         // Add actions to the buttons
         plus.addClickListener(e -> populateForm(null));
         cancel.addClickListener(e -> closeEditor());
-        UI.getCurrent().addShortcutListener(cancel::click, Key.ESCAPE);
         save.addClickListener(e -> {
             try {
                 if (this.samplePerson == null) {
@@ -160,6 +160,11 @@ public class PersonasView extends Div implements BeforeEnterObserver, BeforeLeav
                 posponed = null;
             }
         });
+    }
+
+    @Override
+    protected void onAttach(AttachEvent event) {
+        UI.getCurrent().addShortcutListener(cancel::click, Key.ESCAPE);
     }
 
     @Override
