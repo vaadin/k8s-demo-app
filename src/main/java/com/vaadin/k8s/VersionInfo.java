@@ -16,10 +16,10 @@ public class VersionInfo extends Div {
     private Span nodeName;
 
     public VersionInfo(AppVersions versions) {
-        version = new Span(versions.getVersion());
-        buildTime = new Span(versions.getBuildTime());
-        vaadinVersion = new Span("Vaadin "+versions.getVaadinVersion());
-        nodeName = new Span("Node " + versions.getHostname());
+        version = new Span("AppVersion=" +  versions.getVersion());
+        buildTime = new Span("BuildTime=" + versions.getBuildTime());
+        vaadinVersion = new Span("VaadinVersion="+versions.getVaadinVersion());
+        nodeName = new Span("HostName=" + versions.getHostname());
         setClassName("text-secondary");
         buildTime.getStyle().set("padding","10px");
         nodeName.getStyle().set("padding","10px");
