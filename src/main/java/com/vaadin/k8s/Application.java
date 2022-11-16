@@ -7,7 +7,6 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.ComponentScan;
-import org.vaadin.artur.helpers.LaunchUtil;
 import com.vaadin.flow.theme.Theme;
 import com.vaadin.flow.theme.lumo.Lumo;
 import com.vaadin.flow.component.dependency.NpmPackage;
@@ -26,8 +25,8 @@ import com.vaadin.flow.component.dependency.NpmPackage;
 @ComponentScan(basePackages = {"com.vaadin.k8s","com.vaadin.enterprise"})
 public class Application extends SpringBootServletInitializer implements AppShellConfigurator {
 
-    public static void main(String[] args) {
-        LaunchUtil.launchBrowserInDevelopmentMode(SpringApplication.run(Application.class, args));
-    }
 
+    public static void main(String[] args) {
+        SpringApplication.run(Application.class, args);
+    }
 }
