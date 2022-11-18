@@ -13,7 +13,6 @@ import com.vaadin.flow.router.RouterLink;
 import com.vaadin.flow.server.VaadinRequest;
 import com.vaadin.flow.server.VaadinResponse;
 import com.vaadin.flow.server.auth.AccessAnnotationChecker;
-import com.vaadin.k8s.ClusterSupport;
 import com.vaadin.k8s.data.entity.User;
 import com.vaadin.k8s.security.AuthenticatedUser;
 import com.vaadin.k8s.views.about.AboutView;
