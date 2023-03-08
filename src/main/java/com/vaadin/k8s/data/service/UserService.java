@@ -7,10 +7,10 @@ import org.springframework.stereotype.Service;
 import org.vaadin.artur.helpers.CrudService;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.Set;
-import javax.persistence.ElementCollection;
-import javax.persistence.FetchType;
+import jakarta.persistence.ElementCollection;
+import jakarta.persistence.FetchType;
 import com.vaadin.k8s.data.Role;
-import javax.persistence.Lob;
+import jakarta.persistence.Lob;
 
 @Service
 public class UserService extends CrudService<User, Integer> {
