@@ -9,7 +9,7 @@ import com.vaadin.flow.router.Route;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.k8s.views.MainLayout;
 import com.vaadin.flow.router.RouteAlias;
-import javax.annotation.security.PermitAll;
+import jakarta.annotation.security.PermitAll;
 
 @PageTitle("Hello World")
 @Route(value = "hello", layout = MainLayout.class)

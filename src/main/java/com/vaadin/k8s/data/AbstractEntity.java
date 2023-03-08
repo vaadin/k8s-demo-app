@@ -1,9 +1,9 @@
 package com.vaadin.k8s.data;
 
-import javax.annotation.Nonnull;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.MappedSuperclass;
+import jakarta.annotation.Nonnull;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.MappedSuperclass;
 
 
 @MappedSuperclass
