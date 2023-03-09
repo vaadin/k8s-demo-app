@@ -2,7 +2,7 @@ package com.vaadin.k8s.views.personas;
 
 import java.util.Optional;
 
-import javax.annotation.security.RolesAllowed;
+import jakarta.annotation.security.RolesAllowed;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
