@@ -78,6 +78,8 @@ public class MainLayout extends AppLayout {
         viewTitle.addClassNames("m-0", "text-l");
 
         Header header = new Header(toggle, viewTitle);
+        //<theme-editor-local-classname>
+        header.addClassName("MainLayout-header-1");
         header.addClassNames("bg-base", "border-b", "border-contrast-10", "box-border", "flex", "h-xl", "items-center",
                 "w-full");
         return header;

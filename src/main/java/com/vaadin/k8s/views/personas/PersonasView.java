@@ -2,8 +2,6 @@ package com.vaadin.k8s.views.personas;
 
 import java.util.Optional;
 
-import jakarta.annotation.security.RolesAllowed;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 
@@ -43,6 +41,8 @@ import com.vaadin.flow.spring.data.VaadinSpringDataHelpers;
 import com.vaadin.k8s.data.entity.SamplePerson;
 import com.vaadin.k8s.data.service.SamplePersonService;
 import com.vaadin.k8s.views.MainLayout;
+
+import jakarta.annotation.security.RolesAllowed;
 
 @PageTitle("Personas")
 @Route(value = "personas/:samplePersonID?/:action?(edit)", layout = MainLayout.class)
