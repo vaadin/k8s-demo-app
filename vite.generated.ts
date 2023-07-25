@@ -157,10 +157,12 @@ function buildSWPlugin(opts): PluginOption {
       }
     },
     async closeBundle() {
-      await build('write', [
-        injectManifestToSWPlugin(),
-        brotli(),
-      ]);
+      if (!devMode) {
+        await build('write', [
+          injectManifestToSWPlugin(),
+          brotli(),
+        ]);
+      }
     }
   }
 }
@@ -317,7 +319,8 @@ function vaadinBundlesPlugin(): PluginOption {
             exclude: [
               // Vaadin bundle
               '@vaadin/bundles',
-              ...Object.keys(vaadinBundleJson.packages)
+              ...Object.keys(vaadinBundleJson.packages),
+                '@vaadin/vaadin-material-styles'
             ]
           }
         },
