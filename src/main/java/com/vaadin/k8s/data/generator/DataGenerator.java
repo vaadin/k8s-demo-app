@@ -38,7 +38,6 @@ public class DataGenerator {
             logger.info("... generating 100 Sample Person entities...");
             ExampleDataGenerator<SamplePerson> samplePersonRepositoryGenerator = new ExampleDataGenerator<>(
                     SamplePerson.class, LocalDateTime.of(2021, 8, 31, 0, 0, 0));
-            samplePersonRepositoryGenerator.setData(SamplePerson::setId, DataType.ID);
             samplePersonRepositoryGenerator.setData(SamplePerson::setFirstName, DataType.FIRST_NAME);
             samplePersonRepositoryGenerator.setData(SamplePerson::setLastName, DataType.LAST_NAME);
             samplePersonRepositoryGenerator.setData(SamplePerson::setEmail, DataType.EMAIL);
