@@ -3,14 +3,14 @@
   "license": "UNLICENSED",
   "dependencies": {
     "@polymer/polymer": "3.5.2",
-    "@vaadin/bundles": "24.8.0",
+    "@vaadin/bundles": "24.8.1",
     "@vaadin/common-frontend": "0.0.19",
-    "@vaadin/polymer-legacy-adapter": "24.8.0",
-    "@vaadin/react-components": "24.8.0",
+    "@vaadin/polymer-legacy-adapter": "24.8.1",
+    "@vaadin/react-components": "24.8.1",
     "@vaadin/vaadin-development-mode-detector": "2.0.7",
-    "@vaadin/vaadin-lumo-styles": "24.8.0",
-    "@vaadin/vaadin-material-styles": "24.8.0",
-    "@vaadin/vaadin-themable-mixin": "24.8.0",
+    "@vaadin/vaadin-lumo-styles": "24.8.1",
+    "@vaadin/vaadin-material-styles": "24.8.1",
+    "@vaadin/vaadin-themable-mixin": "24.8.1",
     "@vaadin/vaadin-usage-statistics": "2.1.3",
     "construct-style-sheets-polyfill": "3.1.0",
     "date-fns": "2.29.3",
@@ -45,14 +45,14 @@
   "vaadin": {
     "dependencies": {
       "@polymer/polymer": "3.5.2",
-      "@vaadin/bundles": "24.8.0",
+      "@vaadin/bundles": "24.8.1",
       "@vaadin/common-frontend": "0.0.19",
-      "@vaadin/polymer-legacy-adapter": "24.8.0",
-      "@vaadin/react-components": "24.8.0",
+      "@vaadin/polymer-legacy-adapter": "24.8.1",
+      "@vaadin/react-components": "24.8.1",
       "@vaadin/vaadin-development-mode-detector": "2.0.7",
-      "@vaadin/vaadin-lumo-styles": "24.8.0",
-      "@vaadin/vaadin-material-styles": "24.8.0",
-      "@vaadin/vaadin-themable-mixin": "24.8.0",
+      "@vaadin/vaadin-lumo-styles": "24.8.1",
+      "@vaadin/vaadin-material-styles": "24.8.1",
+      "@vaadin/vaadin-themable-mixin": "24.8.1",
       "@vaadin/vaadin-usage-statistics": "2.1.3",
       "construct-style-sheets-polyfill": "3.1.0",
       "date-fns": "2.29.3",
@@ -84,7 +84,7 @@
       "workbox-core": "7.3.0",
       "workbox-precaching": "7.3.0"
     },
-    "hash": "de804a4df1b18fc7d608a827461d22b8b331f7a7be2488eb8bc1719da1649a57"
+    "hash": "373099d8d98359c87c65f3fb02f912a403099696933bd0fbb652a919106460c9"
   },
   "overrides": {
     "@vaadin/bundles": "$@vaadin/bundles",
