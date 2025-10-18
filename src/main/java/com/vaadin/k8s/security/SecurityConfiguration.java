@@ -1,7 +1,6 @@
 package com.vaadin.k8s.security;
 
 import com.vaadin.flow.spring.security.VaadinAwareSecurityContextHolderStrategyConfiguration;
-import com.vaadin.flow.spring.security.VaadinWebSecurity;
 import com.vaadin.flow.spring.security.stateless.VaadinStatelessSecurityConfigurer;
 import com.vaadin.k8s.views.login.LoginView;
 import org.springframework.beans.factory.annotation.Value;
