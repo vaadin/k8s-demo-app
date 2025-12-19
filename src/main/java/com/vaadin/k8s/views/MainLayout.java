@@ -1,5 +1,7 @@
 package com.vaadin.k8s.views;
 
+import com.vaadin.flow.server.auth.AnonymousAllowed;
+
 import com.vaadin.flow.component.ClientCallable;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.applayout.AppLayout;
@@ -27,7 +29,8 @@ import java.util.Optional;
  * The main view is a top-level placeholder for other views.
  */
 @PageTitle("Main")
-public class MainLayout extends AppLayout {
+@AnonymousAllowed
+public class MainLayout extends AppLayout implements com.vaadin.flow.router.AfterNavigationObserver {
     public static class MenuItemInfo {
 
         private String text;
@@ -182,9 +185,11 @@ public class MainLayout extends AppLayout {
     }
 
     @Override
-    protected void afterNavigation() {
-        super.afterNavigation();
-        viewTitle.setText(getCurrentPageTitle());
+    
+
+    public void afterNavigation(com.vaadin.flow.router.AfterNavigationEvent event) {
+
+    viewTitle.setText(getCurrentPageTitle());
     }
 
     private String getCurrentPageTitle() {
