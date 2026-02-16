@@ -112,12 +112,6 @@
             <groupId>com.vaadin</groupId>
             <artifactId>exampledata</artifactId>
             <version>6.2.0</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>commons-io</groupId>
-                    <artifactId>commons-io</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
 
         <dependency>
