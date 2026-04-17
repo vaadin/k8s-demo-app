@@ -79,7 +79,7 @@
       "workbox-routing": "7.4.0",
       "workbox-strategies": "7.4.0"
     },
-    "hash": "bfd16541f55839bbe1d56866b7d1aed3d723e15aa6344800b23ecbaf8b8e7ef9",
+    "hash": "03f27e2932cda325f936aa84777d34f94a05c663a002c198d353cb5ce98daad8",
     "overrides": {
       "@vaadin/a11y-base": "25.1.1",
       "@vaadin/accordion": "25.1.1",
