@@ -18,12 +18,12 @@
     "lit": "3.3.3",
     "react": "18.3.1",
     "react-dom": "18.3.1",
-    "react-router": "7.18.1"
+    "react-router": "7.18.2"
   },
   "devDependencies": {
     "@babel/preset-react": "7.29.7",
-    "@babel/types": "7.29.7",
-    "@preact/signals-react-transform": "0.8.1",
+    "@babel/types": "7.29.8",
+    "@preact/signals-react-transform": "0.8.2",
     "@rollup/plugin-replace": "6.0.3",
     "@rollup/pluginutils": "5.4.0",
     "@types/react": "18.3.31",
@@ -37,7 +37,7 @@
     "transform-ast": "2.4.4",
     "typescript": "5.9.3",
     "vite": "7.3.6",
-    "vite-plugin-checker": "0.14.4",
+    "vite-plugin-checker": "0.14.5",
     "workbox-build": "7.4.1",
     "workbox-core": "7.4.1",
     "workbox-precaching": "7.4.1",
@@ -62,12 +62,12 @@
       "lit": "3.3.3",
       "react": "18.3.1",
       "react-dom": "18.3.1",
-      "react-router": "7.18.1"
+      "react-router": "7.18.2"
     },
     "devDependencies": {
       "@babel/preset-react": "7.29.7",
-      "@babel/types": "7.29.7",
-      "@preact/signals-react-transform": "0.8.1",
+      "@babel/types": "7.29.8",
+      "@preact/signals-react-transform": "0.8.2",
       "@rollup/plugin-replace": "6.0.3",
       "@rollup/pluginutils": "5.4.0",
       "@types/react": "18.3.31",
@@ -81,14 +81,14 @@
       "transform-ast": "2.4.4",
       "typescript": "5.9.3",
       "vite": "7.3.6",
-      "vite-plugin-checker": "0.14.4",
+      "vite-plugin-checker": "0.14.5",
       "workbox-build": "7.4.1",
       "workbox-core": "7.4.1",
       "workbox-precaching": "7.4.1",
       "workbox-routing": "7.4.1",
       "workbox-strategies": "7.4.1"
     },
-    "hash": "5554698cd413be695d2e35af063a08b0a1ced320b7908ed0a459f5dc0b72ad06",
+    "hash": "2d8342c97cb84655004b071f9ce6a17cbae9990a37953c9d09bd7cd6f8804d07",
     "overrides": {
       "@polymer/polymer": "$@polymer/polymer",
       "@vaadin/a11y-base": "24.10.4",
