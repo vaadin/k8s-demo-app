@@ -257,7 +257,9 @@ public class PersonasView extends Div implements BeforeEnterObserver, BeforeLeav
     private void createGridLayout(HorizontalLayout splitLayout) {
         Div wrapper = new Div();
         wrapper.setId("grid-wrapper");
-        wrapper.setWidthFull();
+        // The grid uses setHeightFull(), so the wrapper needs a height too
+        wrapper.addClassNames("relative");
+        wrapper.setSizeFull();
         splitLayout.add(wrapper);
         plus.setClassName("fab-button");
         plus.addThemeVariants(ButtonVariant.LUMO_PRIMARY, ButtonVariant.LUMO_LARGE);
