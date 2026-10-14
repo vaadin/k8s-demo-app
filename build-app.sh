@@ -9,7 +9,7 @@ set -e
 USER=vaadin
 APP=k8s-demo-app
 VERS=$1
-CSSFILE=frontend/themes/k8s-demo-app/styles.css
+CSSFILE=src/main/frontend/themes/k8s-demo-app/styles.css
 
 deploy() {
   echo ""
