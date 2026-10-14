@@ -74,15 +74,17 @@ public class PersonasView extends Div implements BeforeEnterObserver, BeforeLeav
 
     private SamplePerson samplePerson;
 
-    private SamplePersonService samplePersonService;
+    // transient: re-injected by Kubernetes Kit when the session is restored on another pod
+    private transient SamplePersonService samplePersonService;
 
     private Div editorLayoutDiv;
 
     private ConfirmDialog dialog;
     private ContinueNavigationAction posponed;
 
-    public PersonasView(@Autowired SamplePersonService samplePersonService) {
-        this.samplePersonService = samplePersonService;
+    public PersonasView(@Autowired SamplePersonService service) {
+        // Lambdas below must read the field, capturing the parameter would make the session not serializable
+        this.samplePersonService = service;
         addClassNames("personas-view", "flex", "flex-col", "h-full");
 
         // Create UI

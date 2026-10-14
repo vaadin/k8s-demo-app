@@ -82,11 +82,14 @@
     </dependencyManagement>
 
     <dependencies>
-        <!-- When the application is executed in Kubernetes, this package allows notificate users -->
+        <!-- Session replication, scaling and rolling updates in Kubernetes (commercial) -->
         <dependency>
-            <groupId>com.vaadin.k8s</groupId>
-            <artifactId>vaadin-cluster-support</artifactId>
-            <version>2.0-SNAPSHOT</version>
+            <groupId>com.vaadin</groupId>
+            <artifactId>kubernetes-kit-starter</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.hazelcast</groupId>
+            <artifactId>hazelcast</artifactId>
         </dependency>
         <dependency>
             <groupId>com.vaadin</groupId>

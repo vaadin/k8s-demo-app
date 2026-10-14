@@ -1,13 +1,16 @@
 package com.vaadin.k8s.data;
 
+import java.io.Serializable;
+
 import jakarta.annotation.Nonnull;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.MappedSuperclass;
 
 
+// Serializable: entities held by views are part of the session replicated by Kubernetes Kit
 @MappedSuperclass
-public abstract class AbstractEntity {
+public abstract class AbstractEntity implements Serializable {
 
     @Id
     @GeneratedValue
