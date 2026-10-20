@@ -1,0 +1,62 @@
+# Version 2.0 of the app: image built by `./build-app.sh 2.0`
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: k8s-demo-app-v2
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: k8s-demo-app
+      version: "2.0"
+  template:
+    metadata:
+      labels:
+        app: k8s-demo-app
+        version: "2.0"
+    spec:
+      serviceAccountName: k8s-demo-app
+      containers:
+        - name: k8s-demo-app
+          image: vaadin/k8s-demo-app:2.0
+          # Always: rebuilt images keep the same tag, so nodes must not reuse a cached copy
+          imagePullPolicy: Always
+          env:
+            # Shown in the footer and used by Kubernetes Kit to detect new versions
+            - name: APP_VERSION
+              value: "2.0"
+          ports:
+            - name: http
+              containerPort: 8080
+            - name: multicast
+              containerPort: 5701
+          readinessProbe:
+            httpGet:
+              path: /login
+              port: http
+            initialDelaySeconds: 10
+            periodSeconds: 5
+          livenessProbe:
+            tcpSocket:
+              port: http
+            initialDelaySeconds: 60
+            periodSeconds: 10
+          resources:
+            requests:
+              memory: 512Mi
+              cpu: 250m
+            limits:
+              memory: 1Gi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: k8s-demo-app-v2
+spec:
+  selector:
+    app: k8s-demo-app
+    version: "2.0"
+  ports:
+    - name: http
+      port: 80
+      targetPort: http
