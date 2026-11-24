@@ -1,5 +1,6 @@
 package com.vaadin.k8s;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
@@ -20,7 +21,7 @@ public class CookieInfo extends Div {
         setSizeFull();
     }
 
-    private static class Item {
+    private static class Item implements Serializable {
         final String type;
         final String name;
         final String value;

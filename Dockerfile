@@ -1,11 +1,11 @@
 # Stage that builds the application, a prerequisite for the running stage
-FROM openjdk:17-jdk-slim
+FROM eclipse-temurin:21-jdk
 
 # Set password for root
 RUN echo 'root:D0ck3r!"' | chpasswd
 
 # Install some network utilities for tracing problems
-RUN apt-get update -qq && apt-get install -qq --no-install-recommends inetutils-ping telnet curl netcat nodejs
+RUN apt-get update -qq && apt-get install -qq --no-install-recommends inetutils-ping telnet curl netcat-openbsd nodejs
 
 # Add a non-root user for running the app
 RUN useradd -m myuser

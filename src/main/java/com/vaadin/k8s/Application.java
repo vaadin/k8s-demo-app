@@ -6,10 +6,10 @@ import com.vaadin.flow.server.PWA;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
-import org.springframework.context.annotation.ComponentScan;
 import com.vaadin.flow.theme.Theme;
 import com.vaadin.flow.theme.lumo.Lumo;
 import com.vaadin.flow.component.dependency.NpmPackage;
+import com.vaadin.flow.component.dependency.StyleSheet;
 
 /**
  * The entry point of the Spring Boot application.
@@ -20,9 +20,10 @@ import com.vaadin.flow.component.dependency.NpmPackage;
  */
 @SpringBootApplication
 @Theme(value = "k8s-demo-app", variant = Lumo.DARK)
+// Vaadin 25 no longer loads the Lumo utility classes (flex, h-full, ...) from theme.json
+@StyleSheet(Lumo.UTILITY_STYLESHEET)
 @PWA(name = "k8s-demo-app", shortName = "k8s-demo-app", offlineResources = {"images/logo.png"})
 @NpmPackage(value = "line-awesome", version = "1.3.0")
-@ComponentScan(basePackages = {"com.vaadin.k8s","com.vaadin.enterprise"})
 public class Application extends SpringBootServletInitializer implements AppShellConfigurator {
 
 

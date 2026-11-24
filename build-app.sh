@@ -2,14 +2,16 @@
 
 ### Just an utility script that allows to deploy the app with different versions to Docker Hub
 ### It changes colors for each branch, packages the app, builds the docker image and deploys it.
-### Usage: ./build-app.sh 1.0 
+### Usage: ./build-app.sh <1.0|2.0|3.0|all> [--local]
+###   --local  skip the push, for local clusters that can use local images (Docker Desktop, see k8s/demo.sh)
 
 set -e
 
 USER=vaadin
 APP=k8s-demo-app
 VERS=$1
-CSSFILE=frontend/themes/k8s-demo-app/styles.css
+LOCAL=$2
+CSSFILE=src/main/frontend/themes/k8s-demo-app/styles.css
 
 deploy() {
   echo ""
@@ -32,6 +34,8 @@ deploy() {
   echo ">> Building Docker Image ${USER}/${APP}:${VERS} ..."
   docker build --quiet --tag ${USER}/${APP}:${VERS} .
 
+  [ "${LOCAL}" = "--local" ] && return
+
   # Publish docker image
   echo ""
   echo ">> Publishing Image in Docker Hub (You need privs to push to ${USER}/${APP}) ..."
@@ -43,6 +47,6 @@ case ${VERS} in
   1.0) base="#233348" primary="#2a7fef" deploy;;
   2.0) base="#2c6d3b" primary="#194e19" deploy;;
   3.0) base="#926513" primary="#c2881f" deploy;;
-  all) sh $0 1.0 && sh $0 2.0 && sh $0 3.0;;
-  *) echo "Usage $0 <1.0|2.0|3.0|all>" && exit 1;;
+  all) sh $0 1.0 ${LOCAL} && sh $0 2.0 ${LOCAL} && sh $0 3.0 ${LOCAL};;
+  *) echo "Usage $0 <1.0|2.0|3.0|all> [--local]" && exit 1;;
 esac

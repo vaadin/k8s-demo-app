@@ -2,7 +2,6 @@ package com.vaadin.k8s.views;
 
 import com.vaadin.flow.server.auth.AnonymousAllowed;
 
-import com.vaadin.flow.component.ClientCallable;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.applayout.AppLayout;
 import com.vaadin.flow.component.applayout.DrawerToggle;
@@ -59,8 +58,9 @@ public class MainLayout extends AppLayout implements com.vaadin.flow.router.Afte
 
     private H1 viewTitle;
 
-    private AuthenticatedUser authenticatedUser;
-    private AccessAnnotationChecker accessChecker;
+    // transient: Spring beans are re-injected by Kubernetes Kit when the session is restored on another pod
+    private transient AuthenticatedUser authenticatedUser;
+    private transient AccessAnnotationChecker accessChecker;
 
     public MainLayout(AuthenticatedUser authenticatedUser, AccessAnnotationChecker accessChecker) {
         this.authenticatedUser = authenticatedUser;
@@ -177,11 +177,6 @@ public class MainLayout extends AppLayout implements com.vaadin.flow.router.Afte
         }
 
         return layout;
-    }
-
-    @ClientCallable
-    public void newVersion() {
-        authenticatedUser.logout();
     }
 
     @Override
